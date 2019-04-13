@@ -1,0 +1,70 @@
+//n queen problem using backtracking
+#include<iostream>
+#include<math.h>
+using namespace std;
+int res[20];
+int print_result(int n)            //function to display result
+{
+	int i,j;
+	for(i=1;i<=n;i++)
+	{
+		cout<<"\n";
+		for(j=1;j<=n;j++)
+		{
+			if(res[i]==j)
+			{
+				cout<<"\tQ"<<i;
+			}
+			else
+			{
+				cout<<"\t-";
+			}
+		}
+	}
+}
+int can_place(int row,int col)
+{
+	int i;
+	for(i=1;i<=row-1;i++)
+	{
+		if(res[i]==col)                                        //if queen is in same col then cant be placed
+		{
+			return 0;
+		}
+		if(abs(col-res[i])==abs(i-row))                         //queen on same diagonal cant be placed.
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+int nqueen(int row,int n)
+{
+	int col;
+	for(col=1;col<=n;col++)
+	{
+		if(can_place(row,col))                                 //check the conditions to decide3 to place queen
+		{
+			res[row]=col;
+			if(row==n)
+			{
+				print_result(n);
+				cout<<"\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+			}
+			else
+			{ 
+				nqueen(row+1,n);                                            //function for backtracking
+			}
+		}
+	}
+	
+}
+
+int main()
+{
+	int n;
+	cout<<"enter n:";
+	cin>>n;
+	nqueen(1,n);
+	return 0;
+}
